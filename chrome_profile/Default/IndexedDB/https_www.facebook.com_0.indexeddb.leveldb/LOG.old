@@ -1,0 +1,7 @@
+2025/02/27-00:10:20.374 5790 Creating DB D:\SocialMediaManager\chrome_profile\Default\IndexedDB\https_www.facebook.com_0.indexeddb.leveldb since it was missing.
+2025/02/27-00:10:20.493 5790 Reusing MANIFEST D:\SocialMediaManager\chrome_profile\Default\IndexedDB\https_www.facebook.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/02/27-00:10:23.550 5790 Level-0 table #5: started
+2025/02/27-00:10:23.670 5790 Level-0 table #5: 7892 bytes OK
+2025/02/27-00:10:23.982 5790 Delete type=0 #3
+2025/02/27-00:10:23.983 5790 Manual compaction at level-0 from '\x00\x05\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x06\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/02/27-00:10:24.523 5bd8 Manual compaction at level-0 from '\x00\x08\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x09\x00\x00\x00' @ 0 : 0; will stop at (end)
