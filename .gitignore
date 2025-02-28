@@ -1,0 +1,33 @@
+# Ignore environment-related files
+.env
+*.log
+config.json
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environment
+venv/
+*.venv/
+env/
+*.env/
+
+# Ignore cache & system files
+.DS_Store
+*.swp
+*.swo
+Thumbs.db
+
+# Ignore Selenium WebDriver files (optional)
+chromedriver
+chromedriver.exe
+
+# Ignore data files
+*.csv
+*.db
+*.sqlite3
+
+# Ignore Git & VSCode-related files
+.git/
+.vscode/
