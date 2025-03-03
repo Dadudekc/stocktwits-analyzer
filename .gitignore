@@ -47,3 +47,4 @@ data/
 # Miscellaneous files
 .DS_Store
 Thumbs.db
+chrome_profile/Default/Cache/Cache_Data/*
