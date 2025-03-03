@@ -1,3 +1,6 @@
-2025/02/27-00:14:17.626 331c Reusing MANIFEST D:\SocialMediaManager\chrome_profile\Default\Session Storage/MANIFEST-000001
-2025/02/27-00:14:17.628 331c Recovering log #3
-2025/02/27-00:14:17.630 331c Reusing old log D:\SocialMediaManager\chrome_profile\Default\Session Storage/000003.log 
+2025/03/03-09:00:49.456 d5dc Reusing MANIFEST D:\SocialMediaManager\chrome_profile\Default\Session Storage/MANIFEST-000001
+2025/03/03-09:00:49.458 d5dc Recovering log #13
+2025/03/03-09:00:49.462 d5dc Reusing old log D:\SocialMediaManager\chrome_profile\Default\Session Storage/000013.log 
+2025/03/03-09:00:50.178 e1f0 Level-0 table #17: started
+2025/03/03-09:00:50.215 e1f0 Level-0 table #17: 18267 bytes OK
+2025/03/03-09:00:50.274 e1f0 Delete type=0 #13

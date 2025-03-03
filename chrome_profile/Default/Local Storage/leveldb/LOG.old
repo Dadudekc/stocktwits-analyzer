@@ -1,2 +1,6 @@
-2025/02/27-00:08:04.645 4100 Creating DB D:\SocialMediaManager\chrome_profile\Default\Local Storage\leveldb since it was missing.
-2025/02/27-00:08:05.464 4100 Reusing MANIFEST D:\SocialMediaManager\chrome_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2025/03/03-08:58:49.940 b754 Reusing MANIFEST D:\SocialMediaManager\chrome_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2025/03/03-08:58:49.948 b754 Recovering log #31
+2025/03/03-08:58:49.950 b754 Reusing old log D:\SocialMediaManager\chrome_profile\Default\Local Storage\leveldb/000031.log 
+2025/03/03-08:59:46.813 bf30 Level-0 table #36: started
+2025/03/03-08:59:46.852 bf30 Level-0 table #36: 27139 bytes OK
+2025/03/03-08:59:46.886 bf30 Delete type=0 #31

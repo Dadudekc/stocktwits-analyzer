@@ -1,3 +1,4 @@
+# D:\SocialMediaManager\sentiment_scraper.py
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
 

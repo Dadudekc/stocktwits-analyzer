@@ -1,5 +1,5 @@
 """
-D:\SocialMediaManager\platform_login_manager.py
+D:\\SocialMediaManager\\platform_login_manager.py
 
 Handles the login process for multiple social media platforms using Selenium.
 Leverages a persistent Chrome profile, stored cookies, and manual fallback
@@ -29,7 +29,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Import centralized config and logging
-from config import config
+from project_config import config  # ✅ Correct (using instance)
 from setup_logging import setup_logging
 
 logger = setup_logging("platform_login", log_dir=os.path.join(os.getcwd(), "logs", "social"))
@@ -216,28 +216,82 @@ def login_facebook(driver):
 
     wait_for_manual_login(driver, fb_logged_in, platform)
 
+def is_logged_in(driver):
+    """
+    Checks if the user is logged into Instagram using multiple validation points:
+    - Profile icon (Reliable but might change)
+    - OneTap page (Might appear even if logged out)
+    - Redirect Test: /direct/inbox/ (Strongest check)
+    """
+    try:
+        # 🔹 Check for the profile icon (appears on most Instagram pages)
+        driver.find_element(By.XPATH, "//div[contains(@aria-label, 'Profile')]")
+        return True
+    except:
+        pass
+
+    # 🔹 Check if redirected to the OneTap page
+    if "accounts/onetap" in driver.current_url:
+        return True
+
+    # 🔹 Final Check: Navigate to Direct Messages & Check Redirection
+    driver.get("https://www.instagram.com/direct/inbox/")
+    time.sleep(5)
+    
+    if "login" in driver.current_url:
+        logger.warning("🚨 Instagram login check failed: Redirected to login page.")
+        return False
+
+    logger.info("✅ Confirmed Instagram login via Direct Messages.")
+    return True
+
 def login_instagram(driver):
     platform = "instagram"
     driver.get("https://www.instagram.com/accounts/login/")
     time.sleep(5)
 
+    # Exit early if credentials are missing
+    creds = SOCIAL_CREDENTIALS.get(platform, {})
+    if not creds.get("email") or not creds.get("password"):
+        logger.warning("⚠️ No Instagram credentials provided. Skipping login.")
+        return  
+
     load_cookies(driver, platform)
     driver.refresh()
     time.sleep(5)
 
-    if "accounts/onetap" in driver.current_url or "instagram.com" in driver.current_url:
-        logger.info("Already logged into Instagram.")
+    # 🔹 Use enhanced login detection
+    if is_logged_in(driver):
+        logger.info("✅ Already logged into Instagram.")
         return
 
-    creds = SOCIAL_CREDENTIALS.get(platform, {})
-    if creds.get("email") and creds.get("password"):
-        try:
-            driver.find_element(By.NAME, "username").send_keys(creds["email"])
-            driver.find_element(By.NAME, "password").send_keys(creds["password"], Keys.RETURN)
-        except Exception as e:
-            logger.error("Automatic login error for %s: %s", platform, e)
+    try:
+        username_field = driver.find_element(By.NAME, "username")
+        password_field = driver.find_element(By.NAME, "password")
+        username_field.send_keys(creds["email"])
+        password_field.send_keys(creds["password"], Keys.RETURN)
+        time.sleep(5)
+    except Exception as e:
+        logger.error("🚨 Automatic login error for Instagram: %s", e)
 
-    wait_for_manual_login(driver, lambda d: "instagram.com" in d.current_url, platform)
+    # 🔹 Final check after login attempt
+    if not is_logged_in(driver):
+        logger.warning("⚠️ Instagram login failed. Manual login required.")
+        wait_for_manual_login(driver, is_logged_in, platform)
+
+
+    try:
+        username_field = driver.find_element(By.NAME, "username")
+        password_field = driver.find_element(By.NAME, "password")
+        username_field.send_keys(creds["email"])
+        password_field.send_keys(creds["password"], Keys.RETURN)
+        time.sleep(5)
+    except Exception as e:
+        logger.error("🚨 Automatic login error for Instagram: %s", e)
+
+    if not is_logged_in(driver):
+        logger.warning("⚠️ Instagram login failed. Manual login required.")
+        wait_for_manual_login(driver, is_logged_in, platform)
 
 def login_reddit(driver):
     platform = "reddit"
@@ -275,38 +329,49 @@ def login_reddit(driver):
 
 def login_stocktwits(driver):
     """
-    Logs into Stocktwits using a similar workflow:
-      - Navigate to the Stocktwits login page.
-      - Attempt to load cookies.
-      - Refresh the page.
-      - If not already logged in, try automatic login if credentials exist,
-        and finally fall back to manual login.
+    Logs into Stocktwits with improved detection:
+      - Loads cookies and refreshes
+      - Attempts auto-login if necessary
+      - Verifies login using Stocktwits Settings page
     """
     platform = "stocktwits"
-    driver.get("https://stocktwits.com/login")
+    driver.get("https://stocktwits.com/signin")
     time.sleep(5)
 
     load_cookies(driver, platform)
     driver.refresh()
     time.sleep(5)
 
-    # Check if already logged in: Stocktwits typically redirects away from '/login'
-    if "login" not in driver.current_url.lower():
-        logger.info("Already logged into Stocktwits.")
+    # 🔹 Ultimate Login Check: If we can access Stocktwits settings, we are logged in
+    def is_logged_in(d):
+        d.get("https://stocktwits.com/settings/preferences")
+        time.sleep(3)
+        return "preferences" in d.current_url.lower()
+
+    if is_logged_in(driver):
+        logger.info("✅ Already logged into Stocktwits.")
         return
 
     creds = SOCIAL_CREDENTIALS.get(platform, {})
     if creds.get("email") and creds.get("password"):
         try:
-            # These element selectors might need adjustment based on Stocktwits' current layout.
-            username_field = driver.find_element(By.NAME, "username")
-            password_field = driver.find_element(By.NAME, "password")
-            username_field.send_keys(creds["email"])
-            password_field.send_keys(creds["password"], Keys.RETURN)
-        except Exception as e:
-            logger.error("Automatic login error for %s: %s", platform, e)
+            # 🔹 Locate login form elements dynamically
+            username_field = driver.find_element(By.XPATH, "//input[@name='username' or contains(@id, 'email')]")
+            password_field = driver.find_element(By.XPATH, "//input[@name='password' or contains(@id, 'password')]")
+            login_button = driver.find_element(By.XPATH, "//button[contains(text(), 'Log In')]")
 
-    wait_for_manual_login(driver, lambda d: "login" not in d.current_url.lower(), platform)
+            username_field.send_keys(creds["email"])
+            password_field.send_keys(creds["password"])
+            login_button.click()  # Explicit click for reliability
+            time.sleep(5)
+
+        except Exception as e:
+            logger.error("🚨 Automatic login error for %s: %s", platform, e)
+
+    # 🔹 Final Verification: Navigate to settings page
+    if not is_logged_in(driver):
+        logger.warning("⚠️ Stocktwits login failed. Manual login required.")
+        wait_for_manual_login(driver, is_logged_in, platform)
 
 # --------------------------------------------------------------------------
 # Master Method: Run All Logins
@@ -320,12 +385,12 @@ def run_all_logins():
     driver = get_driver()
     
     login_functions = [
-        login_linkedin,
+        login_stocktwits,
         login_twitter,
         login_facebook,
         login_instagram,
         login_reddit,
-        login_stocktwits  # Added Stocktwits login
+        login_linkedin  # Added Stocktwits login
     ]
     
     for login_fn in login_functions:

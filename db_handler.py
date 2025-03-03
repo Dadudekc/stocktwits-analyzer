@@ -1,6 +1,12 @@
 import mysql.connector
 import logging
-from config import config
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from project_config import config
+
+ 
 
 class DatabaseHandler:
     """
@@ -18,7 +24,8 @@ class DatabaseHandler:
         self.logger.info(f"✅ Initializing DatabaseHandler for {self.db_type}")
         self.conn = self.get_connection()
         self.cursor = self.conn.cursor()
-        self._initialize_table()
+        # Expose table initialization publicly:
+        self.initialize_table()
 
     def get_connection(self):
         """Establishes a new database connection."""
@@ -44,7 +51,7 @@ class DatabaseHandler:
             self.conn.close()
         self.logger.info("✅ Database connection closed.")
 
-    def _initialize_table(self):
+    def initialize_table(self):
         """Ensures SentimentData table exists."""
         query = """
         CREATE TABLE IF NOT EXISTS SentimentData (
@@ -63,6 +70,7 @@ class DatabaseHandler:
             self.logger.info("✅ SentimentData table initialized successfully.")
         except Exception as e:
             self.logger.error(f"❌ Error initializing SentimentData table: {e}")
+            raise
 
     def bulk_insert_sentiment(self, data):
         """Inserts multiple sentiment records in a batch transaction."""
@@ -77,6 +85,7 @@ class DatabaseHandler:
         except Exception as e:
             self.conn.rollback()
             self.logger.error(f"⚠️ Database bulk insert failed: {e}")
+            raise
 
     def save_sentiment(self, ticker, timestamp, content, textblob_sentiment, vader_sentiment, sentiment_category):
         """
@@ -93,11 +102,11 @@ class DatabaseHandler:
         except Exception as e:
             self.conn.rollback()
             self.logger.error(f"⚠️ Error saving sentiment data: {e}")
+            raise
 
     def fetch_sentiment(self, ticker, limit=10):
         """
         Fetches the most recent sentiment data for a given ticker.
-
         :param ticker: Stock ticker symbol.
         :param limit: Maximum number of records to retrieve.
         :return: List of dictionaries containing sentiment data.
