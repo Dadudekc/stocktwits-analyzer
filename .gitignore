@@ -1,33 +1,49 @@
-# Ignore environment-related files
-.env
-*.log
-config.json
+# Python cache files
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.pdb
 
-# Ignore virtual environment
+# Virtual environment directories
 venv/
-*.venv/
 env/
-*.env/
 
-# Ignore cache & system files
-.DS_Store
-*.swp
-*.swo
-Thumbs.db
-
-# Ignore Selenium WebDriver files (optional)
-chromedriver
-chromedriver.exe
-
-# Ignore data files
-*.csv
-*.db
+# MySQL related files
+*.sql
 *.sqlite3
+*.db
+stocktwits_sentiment.db
 
-# Ignore Git & VSCode-related files
-.git/
+# Logs and temp files
+logs/
+*.log
+
+# Test-related files and folders
+*.pytest_cache/
+*.coverage
+test/__pycache__/
+test/test_sentiment_analysis_discord_bot.py
+
+# Cookies and credentials (Do NOT track sensitive information)
+cookies/
+*.pkl
+stocktwits_cookies.json
+.env
+
+# Chrome profile folder (temporary browser files)
+chrome_profile/
+
+# Sentiment data
+data/
+*.csv
+*.json
+
+# IDE related files
 .vscode/
+.idea/
+*.iml
+
+# Miscellaneous files
+.DS_Store
+Thumbs.db
