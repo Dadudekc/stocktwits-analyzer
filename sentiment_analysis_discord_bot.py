@@ -14,7 +14,7 @@ from transformers import pipeline  # Using FinBERT for sentiment analysis
 from sentiment_scraper import run_multi_ticker_scraper
 
 # Import the configuration class and create an instance.
-from project_config import Config
+from logins.project_config import Config
 config = Config()
 
 # Load environment variables explicitly.
@@ -50,7 +50,7 @@ except ValueError as e:
 
 
 # ------------------ Logging Setup ------------------
-from setup_logging import setup_logging
+from logins.setup_logging import setup_logging
 console_level = logging.WARNING  # Show only warnings/errors/critical to console
 logger = setup_logging("DiscordBot", log_dir=config.LOG_DIR, console_log_level=console_level)
 logger.info("Logger initialized (file logs are verbose, console logs are WARNING and above).")

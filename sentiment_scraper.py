@@ -76,13 +76,32 @@ def load_cookies(driver):
     Loads Stocktwits cookies from file if available, then sets them in the browser.
     """
     if not os.path.exists(COOKIE_FILE):
+        logger.warning("❌ Cookie file not found")
         return False
     try:
         with open(COOKIE_FILE, "r") as f:
             cookies = json.load(f)
+        
+        # First navigate to the domain to set cookies
+        driver.get("https://stocktwits.com")
+        time.sleep(2)  # Wait for page to load
+        
         for cookie in cookies:
-            cookie.pop("sameSite", None)
-            driver.add_cookie(cookie)
+            try:
+                # Remove problematic attributes
+                cookie.pop("sameSite", None)
+                cookie.pop("expiry", None)
+                cookie.pop("storeId", None)
+                
+                # Ensure domain is set correctly
+                if "domain" in cookie:
+                    cookie["domain"] = ".stocktwits.com"
+                
+                driver.add_cookie(cookie)
+            except Exception as e:
+                logger.warning(f"⚠️ Failed to add cookie: {str(e)}")
+                continue
+                
         logger.info("✅ Cookies loaded successfully.")
         return True
     except Exception as e:

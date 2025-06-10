@@ -1,6 +1,6 @@
-2025/03/03-09:00:49.402 d5dc Reusing MANIFEST D:\SocialMediaManager\chrome_profile\Default\Local Storage\leveldb/MANIFEST-000001
-2025/03/03-09:00:49.412 d5dc Recovering log #35
-2025/03/03-09:00:49.415 d5dc Reusing old log D:\SocialMediaManager\chrome_profile\Default\Local Storage\leveldb/000035.log 
-2025/03/03-09:01:47.936 e1f0 Level-0 table #39: started
-2025/03/03-09:01:47.980 e1f0 Level-0 table #39: 33157 bytes OK
-2025/03/03-09:01:48.013 e1f0 Delete type=0 #35
+2025/03/12-10:08:59.252 5470 Reusing MANIFEST D:\SocialMediaManager\chrome_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2025/03/12-10:08:59.257 5470 Recovering log #44
+2025/03/12-10:08:59.259 5470 Reusing old log D:\SocialMediaManager\chrome_profile\Default\Local Storage\leveldb/000044.log 
+2025/03/12-10:09:26.082 441c Level-0 table #49: started
+2025/03/12-10:09:26.112 441c Level-0 table #49: 24280 bytes OK
+2025/03/12-10:09:26.169 441c Delete type=0 #44

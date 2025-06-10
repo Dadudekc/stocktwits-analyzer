@@ -6,7 +6,7 @@ from unittest.mock import patch
 
 # Ensure the parent directory is in sys.path so we can import config.py
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-import project_config as config_module
+import logins.project_config as config_module
 
 def reload_config():
     """Force reload the config module so that patched environment is picked up."""

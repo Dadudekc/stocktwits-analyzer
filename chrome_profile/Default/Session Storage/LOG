@@ -1,6 +1,17 @@
-2025/03/03-09:00:49.456 d5dc Reusing MANIFEST D:\SocialMediaManager\chrome_profile\Default\Session Storage/MANIFEST-000001
-2025/03/03-09:00:49.458 d5dc Recovering log #13
-2025/03/03-09:00:49.462 d5dc Reusing old log D:\SocialMediaManager\chrome_profile\Default\Session Storage/000013.log 
-2025/03/03-09:00:50.178 e1f0 Level-0 table #17: started
-2025/03/03-09:00:50.215 e1f0 Level-0 table #17: 18267 bytes OK
-2025/03/03-09:00:50.274 e1f0 Delete type=0 #13
+2025/03/12-10:08:59.327 5470 Reusing MANIFEST D:\SocialMediaManager\chrome_profile\Default\Session Storage/MANIFEST-000001
+2025/03/12-10:08:59.328 5470 Recovering log #16
+2025/03/12-10:08:59.328 5470 Level-0 table #19: started
+2025/03/12-10:08:59.543 5470 Level-0 table #19: 18601 bytes OK
+2025/03/12-10:08:59.544 5470 Recovering log #19
+2025/03/12-10:08:59.547 5470 Reusing old log D:\SocialMediaManager\chrome_profile\Default\Session Storage/000019.log 
+2025/03/12-10:08:59.669 5470 Delete type=0 #16
+2025/03/12-10:08:59.669 5470 Delete type=2 #20
+2025/03/12-10:08:59.671 441c Compacting 4@0 + 1@1 files
+2025/03/12-10:08:59.902 441c Generated table #20@0: 963 keys, 19873 bytes
+2025/03/12-10:08:59.902 441c Compacted 4@0 + 1@1 files => 19873 bytes
+2025/03/12-10:08:59.953 441c compacted to: files[ 0 1 1 0 0 0 0 ]
+2025/03/12-10:08:59.954 441c Delete type=2 #8
+2025/03/12-10:08:59.954 441c Delete type=2 #11
+2025/03/12-10:08:59.954 441c Delete type=2 #14
+2025/03/12-10:08:59.954 441c Delete type=2 #17
+2025/03/12-10:08:59.954 441c Delete type=2 #19

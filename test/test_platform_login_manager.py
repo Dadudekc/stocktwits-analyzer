@@ -9,7 +9,7 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 # Import functions to test from platform_login_manager.py
-from platform_login_manager import (
+from logins.platform_login_manager import (
     get_driver,
     load_cookies,
     save_cookies,
